@@ -1,11 +1,8 @@
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import AbstractUser, UserManager, \
-    PermissionsMixin
+from django.contrib.auth.models import UserManager, PermissionsMixin
 from django.utils import timezone
-
-_ = lambda x: x
-
+from django.utils.translation import ugettext as _
 
 class EmailUserManager(UserManager):
     def _create_user(self, email, password, **extra_fields):
@@ -37,7 +34,9 @@ class EmailUserManager(UserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-class EmailUser(PermissionsMixin, AbstractBaseUser):
+class AbstractEmailUser(PermissionsMixin, AbstractBaseUser):
+    # This version is abstract, intended for easy subclassing
+
     email = models.EmailField(_('email address'), blank=True, unique=True)
     is_staff = models.BooleanField(
         _('staff status'),
@@ -59,6 +58,7 @@ class EmailUser(PermissionsMixin, AbstractBaseUser):
     USERNAME_FIELD = 'email'
 
     class Meta:
+        abstract = True
         verbose_name = _('email_user')
         verbose_name_plural = _('email_users')
 
@@ -70,3 +70,14 @@ class EmailUser(PermissionsMixin, AbstractBaseUser):
 
     def normalize_username(self, name):
         return self.objects.normalize_email(super().normalize_username(name))
+
+
+class EmailUser(AbstractEmailUser):
+    """
+    The non-abstract version. See AbstractEmailUser for most of the implementation.
+    """
+    objects = EmailUserManager()
+
+    class Meta:
+        verbose_name = _('email_user')
+        verbose_name_plural = _('email_users')
