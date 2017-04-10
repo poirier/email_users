@@ -1,20 +1,12 @@
-"""A setuptools based setup module.
-
-See:
-https://packaging.python.org/en/latest/distributing.html
-https://github.com/pypa/sampleproject
-"""
-
-# Always prefer setuptools over distutils
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name='email_users',
-    version='0.0.1',
-    packages=['email_users', 'email_users.migrations'],
+    version='0.0.2',
+    packages=['email_users'],
     url='https://bitbucket.org/poirier/email_users',
-    license='',
+    license='Apache 2',
     author='poirier',
-    author_email='',
-    description=''
+    author_email='dan@poirier.us',
+    description='Abstract base model for a custom User model for Django, that uses email as its primary identifier.'
 )

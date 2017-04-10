@@ -70,14 +70,3 @@ class AbstractEmailUser(PermissionsMixin, AbstractBaseUser):
 
     def normalize_username(self, name):
         return self.objects.normalize_email(super().normalize_username(name))
-
-
-class EmailUser(AbstractEmailUser):
-    """
-    The non-abstract version. See AbstractEmailUser for most of the implementation.
-    """
-    objects = EmailUserManager()
-
-    class Meta:
-        verbose_name = _('email_user')
-        verbose_name_plural = _('email_users')

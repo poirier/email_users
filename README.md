@@ -8,9 +8,8 @@ Note: The Django docs strongly recommend, and I concur, that if you're going
 to use a custom user model in your project, you use it from the start. You
 can extend it later much more easily than you can switch to a different one.
 
-It might be a good idea, therefore, to use AbstractEmailUser as
-a parent class for your own User model, rather than using EmailUser directly, even
-if you don't customize it at all for now.
+Therefore, this package only provides an abstract model, which you should use
+as a parent class for your own User model, even if you don't customize it at all for now.
 
 See https://docs.djangoproject.com/en/stable/topics/auth/customizing/#auth-custom-user
 for more about using alternative User models in Django.
@@ -37,22 +36,3 @@ To use this as a base class for your own user class:
 3. Add your own user model as AUTH_USER_MODEL in settings:
 
     AUTH_USER_MODEL = 'myapp.MyUser'
-
-
-Alternatively, to use the EmailUser model directly:
-
-1. Install in your Django project's virtualenv:
-
-    pip install git+https://bitbucket.org/poirier/email_users
-
-2. Add to INSTALLED_APPS in settings:
-
-    INSTALLED_APPS = [
-        ...
-        'email_users',
-    ]
-
-3. Set AUTH_USER_MODEL in settings:
-
-    AUTH_USER_MODEL = 'email_users.EmailUser'
-
