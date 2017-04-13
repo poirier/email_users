@@ -4,6 +4,7 @@ from django.contrib.auth.models import UserManager, PermissionsMixin
 from django.utils import timezone
 from django.utils.translation import ugettext as _
 
+
 class EmailUserManager(UserManager):
     def _create_user(self, email, password, **extra_fields):
         """
@@ -68,5 +69,6 @@ class AbstractEmailUser(PermissionsMixin, AbstractBaseUser):
     def get_short_name(self):
         return self.email
 
-    def normalize_username(self, name):
-        return self.objects.normalize_email(super().normalize_username(name))
+    @classmethod
+    def normalize_username(cls, name):
+        return cls.objects.normalize_email(super().normalize_username(name))
